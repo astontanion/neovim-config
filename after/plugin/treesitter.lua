@@ -6,4 +6,9 @@ require("nvim-treesitter.configs").setup {
 	highlight = {
 		enable = true,
 	},
+	rainbow = {
+		enable = false,
+		extended_mode = true,
+		max_file_lines = nil,
+	}
 }

@@ -1,7 +1,20 @@
 vim.g.mapleader = "'"
 vim.g.maplocalleader = "'"
 
-local which_key = require("which-key")
+local map = vim.keymap.set
+
+map("n", "j", "v:count ? 'j' : 'gj'", { silent = true, expr = true } )
+map("n", "k", "v:count ? 'k' : 'gk'", { silent = true, expr = true })
+map("n", "n", "nzzzv")
+map("n", "N", "Nzzzv")
+map("v", "J", ":m '>+1<CR>gv=gv")
+map("v", "K", ":m '<-2<CR>gv=gv")
+
+local which_key_status, which_key = pcall(require, "which-key")
+
+if not which_key_status then
+	return
+end
 
 local window_keys = {
 	name = "window",
@@ -22,36 +35,8 @@ local window_keys = {
 	l = { ":wincmd l<CR>", "split vertically"}
 }
 
-local has_builtin, builtin = pcall(require, "telescope.builtin")
-
-local file_keys = {
-	name = "file",
-}
-
-if has_builtin then
-	file_keys = {
-		name = "file",
-		s = { builtin.find_files, "find" },
-		g = { builtin.git_files, "in git" },
-		f = { builtin.live_grep, "fuzzy" }
-	}
-end
-
-local has_lsp, lsp = pcall(require, "nvim-lspconfig")
-
-local lsp_keys = {
-	name = "code",
-	a = { vim.lsp.buf.code_action(), "actions" },
-	d = { vim.lsp.buf.declaration(), "declaration" },
-	g = { vim.lsp.buf.definition(), "definition" },
-	i = { vim.lsp.buf.implementation(), "implementation" }
-	--r = { vim.lsp.buf.rename(), "rename" }
-}
-
 local mappings = {
 	w = window_keys,
-	f = file_keys,
-	c = lsp_keys
 }
 
 local options = {

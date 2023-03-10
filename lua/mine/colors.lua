@@ -1,4 +1,4 @@
-local colors_scheme = "nightfox"
+local colors_scheme = "nord"
 
 local is_success, _ = pcall(vim.cmd, "colorscheme " .. colors_scheme)
 
